@@ -1,4 +1,4 @@
-# pysteriods
+## pysteroids
 
 pygame-ce Asteriods, a fun little side project of mine, playing around with pygame and a more interactive experience.
 
