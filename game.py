@@ -55,5 +55,9 @@ def main() -> None:
 
     pygame.quit()
 
+# Additonal entrypoint used for: https://github.com/MUNComputerScienceSociety/snakepit
+def muncss_entry() -> None:
+    main()
+
 if __name__ == "__main__":
     main()

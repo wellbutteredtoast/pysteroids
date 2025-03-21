@@ -17,16 +17,10 @@ class Asteroid:
         self.position.x += math.cos(math.radians(self.angle)) * self.speed * dt
         self.position.y += math.sin(math.radians(self.angle)) * self.speed * dt
 
-        # Screen wrapping (can probably be redone)
-        if self.position.x < 0:
-            self.position.x = SCREEN_WIDTH
-        elif self.position.x > SCREEN_WIDTH:
-            self.position.x = 0
-
-        if self.position.y < 0:
-            self.position.y = SCREEN_HEIGHT
-        elif self.position.y > SCREEN_HEIGHT:
-            self.position.y = 0
+        # This works a lot better than the old way, and its only 2LoC
+        # Huzzah!
+        self.position.x %= SCREEN_WIDTH
+        self.position.y %= SCREEN_HEIGHT
 
     def draw(self, display):
         pygame.draw.circle(display, (200, 200, 200), (int(self.position.x), int(self.position.y)), self.radius)

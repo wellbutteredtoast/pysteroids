@@ -9,13 +9,16 @@ SCREEN_HEIGHT = 600
 
 class Player:
     def __init__(self):
+        # Init mizer and load sfx into memory
         pygame.mixer.init()
 
         self.hit_sound = pygame.mixer.Sound('sfx/hit.wav')
         self.explosion_sound = pygame.mixer.Sound('sfx/explosion.wav')
+        self.shoot_sound = pygame.mixer.Sound('sfx/shoot.wav')
 
-        self.hit_sound.set_volume(0.6)
-        self.explosion_sound.set_volume(0.6)
+        self.hit_sound.set_volume(0.09)
+        self.explosion_sound.set_volume(0.09)
+        self.shoot_sound.set_volume(0.09)
 
         self.__health: int = 5
         self.__score: int = 0
@@ -119,8 +122,11 @@ class Player:
         self.__angle += angle
     
     def __fire(self):
-        bullet = Bullet(self.__position, self.__angle)
-        self.__bullets.append(bullet)
+        MAX_BULLETS = 5
+        if len(self.__bullets) < MAX_BULLETS:
+            self.shoot_sound.play()
+            bullet = Bullet(self.__position, self.__angle)
+            self.__bullets.append(bullet)
 
     def __get_triangle_points(self):
         size = 20
