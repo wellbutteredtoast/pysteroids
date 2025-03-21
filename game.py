@@ -18,7 +18,7 @@ def main() -> None:
     plr = player.Player()
 
     # asteroids init
-    asteroids = [asteroid.Asteroid(WINDOW[0], WINDOW[1]) for _ in range(10)]
+    asteroids = [asteroid.Asteroid(WINDOW[0], WINDOW[1]) for _ in range(12)]
 
     dt = 1 / REFRESH
 
@@ -47,9 +47,9 @@ def main() -> None:
 
         pygame.display.flip()
 
-        # in case we run out of asteroids
-        if len(asteroids) <= 1:
-            asteroids = [asteroid.Asteroid(WINDOW[0], WINDOW[1]) for _ in range(10)]
+        # in case we run low on the asteroids
+        if len(asteroids) <= 2:
+            asteroids += [asteroid.Asteroid(WINDOW[0], WINDOW[1]) for _ in range(12)]
 
         dt = clock.tick(REFRESH) / 1000 
 

@@ -1,6 +1,7 @@
 import pygame
 import math
-import sys
+from sys import exit
+from time import sleep
 
 # This covers both the players functionality and also the bullets the player can fire.
 
@@ -96,13 +97,12 @@ class Player:
                 self.hit_sound.play()
                 if self.__health <= 0:
                     print("Game Over!")
-                    sys.exit(0)
-                    # Placeholder! (says every dev ever)
+                    exit(0)
 
     def draw_ui(self, display):
         # Renders the Health/Score UI
         # (why is this in player?)
-        health_text = self.__font.render(f"Health: {self.__health}", True, (255, 255, 255))
+        health_text = self.__font.render(f"Health: {self.__health}", True, (255, 000, 000))
         score_text = self.__font.render(f"Score: {self.__score}", True, (255, 255, 255))
         display.blit(health_text, (10, 10))
         display.blit(score_text, (10, 40))
@@ -122,11 +122,12 @@ class Player:
         self.__angle += angle
     
     def __fire(self):
-        MAX_BULLETS = 5
+        MAX_BULLETS = 6
         if len(self.__bullets) < MAX_BULLETS:
             self.shoot_sound.play()
             bullet = Bullet(self.__position, self.__angle)
             self.__bullets.append(bullet)
+            sleep(0.011)
 
     def __get_triangle_points(self):
         size = 20
