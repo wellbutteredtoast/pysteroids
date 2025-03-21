@@ -11,6 +11,7 @@ def main() -> None:
     pygame.init()
     display = pygame.display.set_mode(WINDOW)
     pygame.display.set_caption('pysteroids')
+    pygame.display.set_icon(pygame.image.load('favicon.ico'))
     clock = pygame.time.Clock()
     active = True
 
