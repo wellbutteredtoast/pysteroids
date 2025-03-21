@@ -10,6 +10,7 @@ REFRESH = 60
 def main() -> None:
     pygame.init()
     display = pygame.display.set_mode(WINDOW)
+    pygame.display.set_caption('pysteroids')
     clock = pygame.time.Clock()
     active = True
 
@@ -27,7 +28,7 @@ def main() -> None:
             if event.type == pygame.QUIT:
                 active = False
 
-        pkey = pygame.key.get_pressed()  # Get key states before updating player
+        pkey = pygame.key.get_pressed() 
         
         # Update game objects
         for rock in asteroids:
@@ -45,6 +46,11 @@ def main() -> None:
         plr.draw(display)
 
         pygame.display.flip()
+
+        # in case we run out of asteroids
+        if len(asteroids) <= 1:
+            asteroids = [asteroid.Asteroid(WINDOW[0], WINDOW[1]) for _ in range(10)]
+
         dt = clock.tick(REFRESH) / 1000 
 
     pygame.quit()

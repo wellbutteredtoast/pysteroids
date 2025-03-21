@@ -9,6 +9,14 @@ SCREEN_HEIGHT = 600
 
 class Player:
     def __init__(self):
+        pygame.mixer.init()
+
+        self.hit_sound = pygame.mixer.Sound('sfx/hit.wav')
+        self.explosion_sound = pygame.mixer.Sound('sfx/explosion.wav')
+
+        self.hit_sound.set_volume(0.6)
+        self.explosion_sound.set_volume(0.6)
+
         self.__health: int = 5
         self.__score: int = 0
         self.__angle: float = 0
@@ -66,7 +74,6 @@ class Player:
         self.check_collisions(asteroids)
 
     def check_collisions(self, asteroids):
-        """Handles bullet-asteroid and player-asteroid collisions."""
         for asteroid in asteroids[:]:   # Iterate over a copy of the list
                                         # Check if any bullet hits an asteroid
             for bullet in self.__bullets[:]:  
@@ -75,6 +82,7 @@ class Player:
                     self.__bullets.remove(bullet)
                     # +5 points per destroyed asteroid
                     self.__score += 5  
+                    self.explosion_sound.play()
                     break
 
             # Check if the player collides with an asteroid
@@ -82,13 +90,15 @@ class Player:
             if asteroid.collides_with(self.__position):
                 self.__health -= 1  
                 asteroids.remove(asteroid)
+                self.hit_sound.play()
                 if self.__health <= 0:
                     print("Game Over!")
                     sys.exit(0)
                     # Placeholder! (says every dev ever)
 
     def draw_ui(self, display):
-        """Draws the player's health and score on the screen."""
+        # Renders the Health/Score UI
+        # (why is this in player?)
         health_text = self.__font.render(f"Health: {self.__health}", True, (255, 255, 255))
         score_text = self.__font.render(f"Score: {self.__score}", True, (255, 255, 255))
         display.blit(health_text, (10, 10))
@@ -128,6 +138,9 @@ class Player:
             self.__position.y + math.sin(angle_rad - 2.5) * size * 0.6
         )
         return [front, left, right]
+
+# The bullet is thankfully far easier than the player
+# just some math at the end of the day, yippee!
 
 class Bullet:
     def __init__(self, position, angle):
